@@ -182,7 +182,7 @@ class create:
                 logging.info('finished\n')
                 break
 
-def main():
+if __name__ == '__main__':
     parse = argparse.ArgumentParser()
     parse.add_argument( '-c', metavar='<COUNT>', type=int, dest='count',
         help='number of accounts you want to make')
@@ -200,6 +200,3 @@ def main():
             logging.critical(str(exc) + '\n')
     else:
         parse.print_help()
-
-if __name__ == '__main__':
-    main()
