@@ -98,7 +98,7 @@ class create:
 
     def _confirmation_code(self, url):
         logging.info('confirm account')
-        ask = raw_input('ASK:root: add phone number / <ENTER> to skipped: ')
+        ask = raw_input('ASK:root: add phone number / <ENTER> to pass : ')
         self.br.open(url)
 
         if ask:
