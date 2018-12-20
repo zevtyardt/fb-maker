@@ -152,7 +152,7 @@ class create:
             self.br = self._browser_options()
             logging.info('searching new emails')
 
-            email_found, check = False, True
+            email_found, check, max_ = False, True, 0
             while True:
                 res_em = self._open_temp_mail()
                 self._mail = self._find_email(res_em)
@@ -167,14 +167,19 @@ class create:
                         if self._create_account_facebook(self._mail):
                             logging.info('waiting for incoming email')
                             email_found = True
-
+                
+                if max_ == 10:
+                    logging.error('no response !')
+                    break
+                    
                 if check and email_found:
                     if self._read_message(res_em):
                         self.create_total += 1
                         logging.info('account created:\n\t   email: %s\n\t   password: %s', self._mail, self._password)
                         self._save_to_file(self._mail, self._password)
-
                         check = False
+                    max_ += 1
+                    
                 else:
                     break
 
