@@ -98,17 +98,7 @@ class create:
 
     def _confirmation_code(self, url):
         logging.info('confirm account')
-        ask = raw_input('ASK:root: add phone number / <ENTER> to pass : ')
         self.br.open(url)
-
-        if ask:
-            self.br.select_form(nr=0)
-            self.br.form['phone-name'] = ask
-            self.br.submit()
-            logging.info('new telephone number added !')
-        else:
-            logging.warning('skipped !')
-
         return True
 
     # mail
