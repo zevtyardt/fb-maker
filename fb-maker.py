@@ -20,7 +20,7 @@ class create:
             format='\r%(levelname)s:%(name)s: %(message)s'
         )
         self.create_total = 0
-        self.blacklist_email = ['@datasoma', '@geroev', '@cliptik', '@khtyler']
+        self.blacklist_email = ['@datasoma', '@geroev', '@cliptik', '@khtyler', '@parcel4']
         self.temp_email_url = 'https://temp-mail.org/en/'
 
         self.__main__()
