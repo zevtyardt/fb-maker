@@ -134,7 +134,7 @@ class create:
                         if self._create_account_facebook(self._mail):
                             logging.info('waiting for incoming email')
                             email_found = True
-                if max_ == 20:
+                if max_ == 10:
                     logging.error('no response !')
                     break
                 if check and email_found:
