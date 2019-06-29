@@ -79,6 +79,8 @@ class create:
         self.br.form['reg_passwd__'] = data['password']
         self.br.submit()
 
+        if "captcha" in self.br.response().read().lower():
+            sys.exit(logging.error("You are caught making fake accounts and spamming users. sorry, try tomorrow again ... ok bye bye\n"))
         for i in range(3):
             self.br.select_form(nr=0)
             self.br.submit()
