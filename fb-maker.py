@@ -32,6 +32,10 @@ class create:
         br.set_handle_equiv(True)
         br.set_handle_referer(True)
         br.set_handle_redirect(True)
+        if arg.proxy:
+            br.set_proxies({"http": arg.proxy,
+                            "https": arg.proxy,
+                            })
         br.set_handle_refresh(
             mechanize._http.HTTPRefreshProcessor(),
             max_time = 5
@@ -156,6 +160,8 @@ if __name__ == '__main__':
     parse = argparse.ArgumentParser()
     parse.add_argument( '-c', metavar='<COUNT>', type=int, dest='count',
         help='number of accounts you want to make')
+    parse.add_argument( '-p', metavar='<IP:PORT>', dest='proxy',
+        help='set proxy')
     parse.add_argument('--debug', action='store_true', dest='level',
         help='set logging level to debug')
     arg = parse.parse_args()
