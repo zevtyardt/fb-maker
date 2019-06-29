@@ -2,6 +2,7 @@
 
 import mechanize
 import requests
+import re
 import bs4
 import logging
 import argparse
@@ -20,8 +21,8 @@ class create:
             format='\r%(levelname)s:%(name)s: %(message)s'
         )
         self.create_total = 0
-        self.blacklist_email = ['@datasoma', '@geroev', '@cliptik', '@khtyler', '@parcel4']
-        self.temp_email_url = 'https://temp-mail.org/en/'
+        self.blacklist_email = [] #'@datasoma', '@geroev', '@cliptik', '@khtyler', '@parcel4']
+        self.temp_email_url = 'https://tempmail.net'
 
         self.__main__()
 
@@ -96,42 +97,18 @@ class create:
 
         return True
 
-    def _confirmation_code(self, url):
-        logging.info('confirm account')
-        self.br.open(url)
-        return True
-
     # mail
     def _open_temp_mail(self):
         return self.br.open(self.temp_email_url).read()
 
     def _find_email(self, text):
-        soup = bs4.BeautifulSoup(
-            text,
-            'html.parser'
-        )
-        return soup.find(class_='mail opentip').attrs['value']
+        return re.findall(r'value="(.+@.+)"', text)[0]
 
     def _read_message(self, text):
-        soup = bs4.BeautifulSoup(
-            text,
-            'html.parser'
-        )
-        view = soup.find('tbody').find('td')
-
-        if view:
-            url_message = view.a['href']
-            logging.info('read email from %s', view.a.text)
-            r2 = self.br.open(url_message).read()
-
-            mess = bs4.BeautifulSoup(r2, 'html.parser')
-            subject_ = mess.find(class_='pm-subject')
-            message_ = mess.find(class_='pm-text')
-
-            logging.info('your code: %s', subject_.text.split()[0])
-
-            if self._confirmation_code(message_.a['href']):
-                return True
+        x = re.findall(r'baslik">(\d+)\s', text)
+        if x:
+            logging.info("your code: %s" % x[0])
+            return True
 
     def _save_to_file(self, email, password):
         with open('akun.txt', 'a') as f:
@@ -157,11 +134,9 @@ class create:
                         if self._create_account_facebook(self._mail):
                             logging.info('waiting for incoming email')
                             email_found = True
-                
-                if max_ == 10:
+                if max_ == 20:
                     logging.error('no response !')
                     break
-                    
                 if check and email_found:
                     if self._read_message(res_em):
                         self.create_total += 1
@@ -169,9 +144,7 @@ class create:
                         self._save_to_file(self._mail, self._password)
                         check = False
                     max_ += 1
-                    
-                else:
-                    break
+                else: break
 
             if self.create_total == arg.count:
                 logging.info('finished\n')
