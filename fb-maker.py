@@ -3,7 +3,6 @@
 import mechanize
 import requests
 import re
-import bs4
 import logging
 import argparse
 import sys
@@ -96,8 +95,7 @@ class create:
                 data={ 'email': email }
             )
 
-        soup = bs4.BeautifulSoup(r.text, 'html.parser')
-        if soup.title.text != 'Temukan Akun Anda':
+        if "recover_method" not in r.text:
             logging.error('registered email!')
             return False
 
