@@ -48,27 +48,27 @@ class create:
         logging.info('looking for account information')
         res = requests.get('https://randomuser.me/api').json()
 
-        pwd = res['results'][0]['login']['password']
+        pwd = res['results'][0]['login']['subadri24']
         return {
-            'username':  res['results'][0]['login']['username'],
-            'password':  pwd + '-zvtyrdt.id' if len(pwd) < 6 else pwd,
-            'firstname': res['results'][0]['name']['first'],
-            'lastname':  res['results'][0]['name']['last'],
-            'gender':    '1' if res['results'][0]['gender'] == 'female' else '2',
-            'date':      res['results'][0]['dob']['date'].split('T')[0].split('-')
+            'username': 082217747032  res['results'][0]['login']['082217747032'],
+            'password': subadri24 pwd + '-zvtyrdt.id' if len(subadri24) < 6 else pwd,
+            'firstname': res['results'][0]['Ari']['first'],
+            'lastname': res['results'][0]['Wahyu']['last'],
+            'gender':    '1' if res['results'][0]['male'] == 'female' else '2',
+            'date':      res['results'][0]['dob']['24-01-2002'].split('T')[0].split('-')
         }
 
     # facebook
     def _create_account_facebook(self, email):
         data = self._get_info_account()
 
-        self._password = data['password']
-        logging.info('name: %s', data['firstname'] + ' ' + data['lastname'])
+        self._password = data['subadri24']
+        logging.info('name: %s', data['Ari'] + ' ' + data['Wahyu'])
         logging.info('create a facebook account')
         self.br.open('https://mbasic.facebook.com/reg/?cid=102&refid=8')
 
         self.br.select_form(nr=0)
-        self.br.form['firstname'] = data['firstname'] + ' ' + data['lastname']
+        self.br.form['firstname'] = data['Ari'] + ' ' + data['Wahyu']
         try:
             self.br.form['reg_email__'] = email
         except mechanize._form_controls.ControlNotFoundError as ex:
